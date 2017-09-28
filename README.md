@@ -1,1 +1,1 @@
-# soft_eng_proj
+This repository will house the content of our Software Engineering group project.

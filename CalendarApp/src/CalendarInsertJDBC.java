@@ -31,27 +31,17 @@ public class CalendarInsertJDBC {
             String sql = "INSERT INTO Events " +
             "VALUES (4, 'Karate Class', '2018-12-01 19:00:00')";
             stmt.executeUpdate(sql);
-//            String sql = "INSERT INTO Registration " +
-//            "VALUES (100, 'Zara', 'Ali', 18)";
-//            stmt.executeUpdate(sql);
-//            sql = "INSERT INTO Registration " +
-//            "VALUES (101, 'Mahnaz', 'Fatma', 25)";
-//            stmt.executeUpdate(sql);
-//            sql = "INSERT INTO Registration " +
-//            "VALUES (102, 'Zaid', 'Khan', 30)";
-//            stmt.executeUpdate(sql);
-//            sql = "INSERT INTO Registration " +
-//            "VALUES(103, 'Sumit', 'Mittal', 28)";
-//            stmt.executeUpdate(sql);
             System.out.println("Inserted records into the table...");
 
             //STEP 4: Clean-up environment
             stmt.close();
             conn.close();
-        }catch(SQLException se){
+        }
+        catch(SQLException se){
         //Handle errors for JDBC
             se.printStackTrace();
-        }catch(Exception e){//Handle errors for Class.forName
+        }
+        catch(Exception e){//Handle errors for Class.forName
             e.printStackTrace();
         }
         finally{//finally block used to close resources
@@ -70,7 +60,6 @@ public class CalendarInsertJDBC {
                 se.printStackTrace();
             }//end finally try
         }//end try
-            System.out.println("Goodbye!");
-       }
+    }
     
 }

@@ -147,8 +147,6 @@ public class CalendarApp {
                         comboYear.addItem(String.valueOf(i));
                 }
                 
-                //txtEventName?
-                
                 //Refresh calendar
                 refreshCalendar (realMonth, realYear); //Refresh calendar
         }

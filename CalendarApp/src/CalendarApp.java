@@ -11,12 +11,22 @@ import java.util.*;
  */
 public class CalendarApp {
     
-        static JLabel labelMonth, labelYear;
-        static JLabel buttonNew;
+        final public static String driver = "org.h2.Driver";
+        final public static String server = "jdbc:h2:~/events"; 
+        final public static String dbuser = "sa";
+        final public static String dbpassword = "";
+    
+        static JLabel labelMonth;
+        static JLabel labelYear;
         static JButton buttonPrev, buttonNext;
         static JTable tblCalendar;
         static JComboBox comboYear;
-        static JTextField textEvent;
+        
+        static JLabel buttonNewEvent;
+        static JLabel buttonEventTime;
+        static JTextField txtEventName;
+        static JTextField txtEventDateTime;
+        
         static JFrame frmMain;
         static Container pane;
         static DefaultTableModel mtblCalendar; //Table model
@@ -34,7 +44,7 @@ public class CalendarApp {
 
                 //Prepare frame
                 frmMain = new JFrame ("Calendar"); //Create frame
-                frmMain.setSize(330, 375); //Set size
+                frmMain.setSize(330, 395); //Set size
                 pane = frmMain.getContentPane(); //Get content pane
                 pane.setLayout(null); //Apply null layout
                 frmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Close when X is clicked
@@ -42,9 +52,12 @@ public class CalendarApp {
                 //Create controls
                 labelMonth = new JLabel ("January");
                 labelYear = new JLabel ("Change year:");
-                buttonNew = new JLabel("Add Event");
+                buttonNewEvent = new JLabel("Add Event:");
+                buttonEventTime = new JLabel("Add Event time:");
+                
                 comboYear = new JComboBox();
-                textEvent = new JTextField();
+                txtEventName = new JTextField("Event name");
+                txtEventDateTime = new JTextField("YYYY/MM/DD hh:mm:ss");
                 buttonPrev = new JButton ("<-");
                 buttonNext = new JButton ("->");
                 mtblCalendar = new DefaultTableModel(){
@@ -60,7 +73,8 @@ public class CalendarApp {
                 buttonPrev.addActionListener(new buttonPrev_Action());
                 buttonNext.addActionListener(new buttonNext_Action());
                 comboYear.addActionListener(new comboYear_Action());
-                textEvent.addActionListener(new textEvent_Action());
+                txtEventName.addActionListener(new txtEventName_Action());
+                txtEventDateTime.addActionListener(new txtEventDateTime_Action());
                 
                 //Add controls to pane
                 pane.add(pnlCalendar);
@@ -73,8 +87,10 @@ public class CalendarApp {
                 pnlCalendar.add(labelYear);
                 pnlCalendar.add(comboYear);
                 
-                pnlCalendar.add(buttonNew);
-                pnlCalendar.add(textEvent);
+                pnlCalendar.add(buttonNewEvent);
+                pnlCalendar.add(buttonEventTime);
+                pnlCalendar.add(txtEventName);
+                pnlCalendar.add(txtEventDateTime);
                 
                 //Set bounds
                 pnlCalendar.setBounds(0, 0, 320, 400);
@@ -85,11 +101,13 @@ public class CalendarApp {
                 buttonNext.setBounds(260, 25, 50, 25);
                 
                 labelYear.setBounds(10, 305, 120, 20);
-                comboYear.setBounds(230, 305, 80, 20);
+                comboYear.setBounds(170, 305, 150, 20);
                 
-                buttonNew.setBounds(10, 325, 80, 20);
-                textEvent.setBounds(230, 325, 80, 20);
-                
+                buttonNewEvent.setBounds(10, 325, 80, 20);
+                buttonEventTime.setBounds(10, 345, 120, 20);
+                txtEventName.setBounds(170, 325, 150, 20);
+                txtEventDateTime.setBounds(170, 345, 150, 20);
+                        
                 //Make frame visible
                 frmMain.setResizable(false);
                 frmMain.setVisible(true);
@@ -129,7 +147,7 @@ public class CalendarApp {
                         comboYear.addItem(String.valueOf(i));
                 }
                 
-                //textEvent?
+                //txtEventName?
                 
                 //Refresh calendar
                 refreshCalendar (realMonth, realYear); //Refresh calendar
@@ -226,7 +244,15 @@ public class CalendarApp {
                 }
         }
         
-        static class textEvent_Action implements ActionListener{
+        static class txtEventName_Action implements ActionListener{
+                public void actionPerformed (ActionEvent e){
+                        //add to the database
+                        refreshCalendar(currentMonth, currentYear);
+                        
+                }
+        }
+        
+        static class txtEventDateTime_Action implements ActionListener{
                 public void actionPerformed (ActionEvent e){
                         //add to the database
                         refreshCalendar(currentMonth, currentYear);
